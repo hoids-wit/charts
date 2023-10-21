@@ -1,0 +1,75 @@
+apiVersion: v2
+version: 2023.8.3
+appVersion: 2023.8.3
+name: authentik
+description: authentik is an open-source Identity Provider focused on flexibility and versatility
+type: application
+home: https://goauthentik.io
+sources:
+  - https://goauthentik.io/docs/
+  - https://github.com/goauthentik/authentik
+keywords:
+  - authentication
+  - directory
+  - identity
+  - idp
+  - ldap
+  - oauth
+  - oidc
+  - proxy
+  - saml
+  - scim
+  - single-sign-on
+  - sp
+  - sso
+icon: https://goauthentik.io/img/icon.png
+maintainers:
+  - name: authentik Team
+    email: hello@goauthentik.io
+    url: https://goauthentik.io
+dependencies:
+  - name: postgresql
+    version: 10.16.2
+    repository: https://charts.goauthentik.io
+    condition: postgresql.enabled
+  - name: redis
+    version: 15.7.6
+    repository: https://charts.goauthentik.io
+    condition: redis.enabled
+  - name: authentik-remote-cluster
+    repository: https://charts.goauthentik.io
+    version: 1.2.2
+    condition: serviceAccount.create
+    alias: serviceAccount
+annotations:
+  artifacthub.io/changes: |
+    - kind: changed
+      description: upgrade to authentik 2023.8.3
+  artifacthub.io/license: GPL
+  artifacthub.io/links: |
+    - name: GitHub
+      url: https://github.com/goauthentik/authentik
+    - name: Docs
+      url: https://goauthentik.io/docs/
+  artifacthub.io/maintainers: |
+    - name: authentik Team
+      email: hello@goauthentik.io
+      url: https://goauthentik.io
+  artifacthub.io/images: |
+    - name: authentik
+      image: ghcr.io/goauthentik/server:2023.8.3
+      whitelisted: true
+    - name: authentik-outpost-proxy
+      image: ghcr.io/goauthentik/proxy:2023.8.3
+      whitelisted: true
+    - name: authentik-outpost-ldap
+      image: ghcr.io/goauthentik/ldap:2023.8.3
+      whitelisted: true
+    - name: authentik-outpost-radius
+      image: ghcr.io/goauthentik/radius:2023.8.3
+      whitelisted: true
+  artifacthub.io/screenshots: |
+    - title: User interface
+      url: https://goauthentik.io/img/screen_apps_light.jpg
+    - title: Admin interface
+      url: https://goauthentik.io/img/screen_admin_light.jpg
