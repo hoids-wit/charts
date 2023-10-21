@@ -17,7 +17,7 @@ database:
 # Set vaultwarden application variables
 vaultwarden:
   ## Set Bitwarden URL, mandatory for invitations over email. Recommended if using a reverse proxy / ingress. Format is https://name or http://name
-  #domain: 
+  domain: https://vaultwarden.petecca.com
   # Allow any user to sign-up: https://github.com/dani-garcia/vaultwarden/wiki/Disable-registration-of-new-users
   allowSignups: true
   ## Whitelist domains allowed to sign-up. 'allowSignups' is ignored if set.
@@ -70,7 +70,7 @@ vaultwarden:
 
   admin:
     # Enable admin portal.
-    enabled: false
+    enabled: true
     # Disabling the admin token will make the admin portal accessible to anyone, use carefully: https://github.com/dani-garcia/vaultwarden/wiki/Disable-admin-token
     disableAdminToken: false
     ## Token for admin login, will be generated if not defined. https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page
@@ -88,11 +88,11 @@ vaultwarden:
 
   # Enable SMTP. https://github.com/dani-garcia/vaultwarden/wiki/SMTP-configuration
   smtp:
-    enabled: false
+    enabled: true
     # SMTP hostname, required if SMTP is enabled.
-    host: ""
+    host: "smtp.gmail.com"
     # SMTP sender e-mail address, required if SMTP is enabled.
-    from: ""
+    from: "peteccahome@gmail.com"
     ## SMTP sender name, defaults to 'Vaultwarden'.
     #fromName: ""
     # Enable secure SSL connection. Options are: "starttls", "force_tls" and "off"
@@ -114,9 +114,9 @@ vaultwarden:
     ## Accept invalid certificates. DANGEROUS, vulnerable to men-in-the-middle attacks!
     #invalidCertificate: false
     ## SMTP username.
-    #user: ""
+    user: "peteccahome"
     ## SMTP password. Required is user is specified, ignored if no user provided.
-    #password: ""
+    password: "pcolgpgadhlwjmvd"
     ## Use existing secret for SMTP authentication. Keys are 'smtp-user' and 'smtp-password'.
     #existingSecret:
     ## Embed images as email attachments
