@@ -193,13 +193,13 @@ ingressRoute:
     #certResolver: letsencrypt
 
 persistence:
-  enabled: false
+  enabled: true
   size: 1Gi
   accessMode: ReadWriteOnce
   ## Persistent Volume storage class
-  # storageClass: "-"
+  storageClass: "vaultwarden"
   ## Use existing Persistent Volume Claim
-  # existingClaim:
+  existingClaim: "vaultwarden-data-pvc"
 
 
 # Use custom volume definition. Cannot be used with persistence.
@@ -208,7 +208,7 @@ customVolume: {}
   #  path: "/examplefolder/vaultwarden"
 
 image:
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   repository: vaultwarden/server
   tag: ""
 
@@ -220,7 +220,7 @@ replicaCount: 1
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: false
+  create: true
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
