@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-api-token-secret
+  namespace: default
+type: Opaque
+stringData:
+  api-token: zX_V-25M9KtMhyDoaj3bjny_tHPpLX3Po66AheJi
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+ name: lets-encrypt
+ namespace: default
+spec:
+ acme:
+   email: peteccahome@gmail.com.com
+   server: https://acme-v02.api.letsencrypt.org/directory
+   privateKeySecretRef:
+     # Secret resource that will be used to store the account's private key.
+     name: peteccahome-letsencrypt-certificate-key
+   # Add a single challenge solver, HTTP01 using nginx
+   solvers:
+    - dns01:
+        cloudflare:
+          email: niklis.petecca@gmail.com
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token

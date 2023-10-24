@@ -20,7 +20,7 @@ metadata:
   name: matrix-data-pv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 50Gi
   accessModes:
     - ReadWriteMany
   storageClassName: matrix-data
