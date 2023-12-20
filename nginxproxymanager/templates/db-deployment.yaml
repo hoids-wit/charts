@@ -13,9 +13,9 @@ spec:
         app: {{ .Values.db.name }}
     spec:
       volumes:
-        - name: mysql
+        - name: {{ .Values.db.volume.name }}
           persistentVolumeClaim:
-            claimName: {{ .Values.db.volumes.mysql.pvc }}
+            claimName: {{ .Values.db.volume.pvc }}
       containers:
         - name: {{ .Values.db.name }}
           image: {{ .Values.db.image }}
@@ -29,5 +29,5 @@ spec:
             - name: MYSQL_PASSWORD
               value: {{ .Values.db.env.MYSQL_PASSWORD }}
           volumeMounts:
-            - name: mysql
-              mountPath: {{ .Values.db.volumes.mysql.mountPath }}
+            - name: {{ .Values.db.volume.name }}
+              mountPath: {{ .Values.db.volume.mountPath }}
