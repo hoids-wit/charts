@@ -21,13 +21,13 @@ spec:
           image: {{ .Values.db.image }}
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: {{ .Values.db.env.MYSQL_ROOT_PASSWORD }}
+              value: "{{ .Values.db.env.MYSQL_ROOT_PASSWORD }}"
             - name: MYSQL_DATABASE
-              value: {{ .Values.db.env.MYSQL_DATABASE }}
+              value: "{{ .Values.db.env.MYSQL_DATABASE }}"
             - name: MYSQL_USER
-              value: {{ .Values.db.env.MYSQL_USER }}
+              value: "{{ .Values.db.env.MYSQL_USER }}"
             - name: MYSQL_PASSWORD
-              value: {{ .Values.db.env.MYSQL_PASSWORD }}
+              value: "{{ .Values.db.env.MYSQL_PASSWORD }}"
           volumeMounts:
             - name: {{ .Values.db.volume.name }}
               mountPath: {{ .Values.db.volume.mountPath }}
