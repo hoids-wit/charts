@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.app.volumes.data.pvc }}
+        - name: letsencrypt
+          persistentVolumeClaim:
+            claimName: {{ .Values.app.volumes.letsencrypt.pvc }}
+      containers:
+        - name: {{ .Values.app.name }}
+          image: {{ .Values.app.image }}
+          ports:
+            - containerPort: {{ .Values.app.ports.http.targetPort }}
+            - containerPort: {{ .Values.app.ports.https.targetPort }}
+            - containerPort: {{ .Values.app.ports.admin.targetPort }}
+          env:
+            - name: DB_MYSQL_HOST
+              value: {{ .Values.app.env.DB_MYSQL_HOST }}
+            - name: DB_MYSQL_PORT
+              value: {{ .Values.app.env.DB_MYSQL_PORT }}
+            - name: DB_MYSQL_USER
+              value: {{ .Values.app.env.DB_MYSQL_USER }}
+            - name: DB_MYSQL_PASSWORD
+              value: {{ .Values.app.env.DB_MYSQL_PASSWORD }}
+            - name: DB_MYSQL_NAME
+              value: {{ .Values.app.env.DB_MYSQL_NAME }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.app.volumes.data.mountPath }}
+            - name: letsencrypt
+              mountPath: {{ .Values.app.volumes.letsencrypt.mountPath }}
