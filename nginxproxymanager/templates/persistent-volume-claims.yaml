@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .name}}-pvc
+  name: {{ .storageClassName}}-pvc
 spec:
   accessModes:
     - ReadWriteMany
