@@ -4,16 +4,16 @@ metadata:
  name: lets-encrypt
 spec:
  acme:
-   email: {{- .Values.certManager.acmeEmail}}
+   email: {{- .Values.certManager.acmeEmail }}
    server: https://acme-v02.api.letsencrypt.org/directory
    privateKeySecretRef:
      # Secret resource that will be used to store the account's private key.
-     name: {{- .Values.certManager.secret.key}}
+     name: {{- .Values.certManager.secret.key }}
    # Add a single challenge solver, HTTP01 using nginx
    solvers:
     - dns01:
         cloudflare:
-          email: {{- .Values.certManager.cloudflareEmail}}
+          email: {{- .Values.certManager.cloudflareEmail }}
           apiTokenSecretRef:
-            name: {{- .Values.certManager.secret.name}}
+            name: {{- .Values.certManager.secret.name }}
             key: api-token
