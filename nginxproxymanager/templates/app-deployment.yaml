@@ -22,10 +22,10 @@ spec:
         - name: {{ .Values.app.name }}
           image: {{ .Values.app.image }}
           ports:
-          {{- range .Values.app.ports}}
-            - containerPort: {{ .targetPort }}
-            name: {{ .name }}
-            protocol: TCP
+          {{- range .Values.app.ports }}
+            - name: {{ .name }}
+              containerPort: {{ .targetPort }}
+              protocol: TCP
           {{- end }}
           env:
             - name: DB_MYSQL_HOST
