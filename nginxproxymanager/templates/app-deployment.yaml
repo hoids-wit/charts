@@ -13,12 +13,11 @@ spec:
         app: {{ .Values.app.name }}
     spec:
       volumes:
-        - name: data
+      {{- range .Values.app.volumes}}
+        - name: {{ .name }}
           persistentVolumeClaim:
-            claimName: {{ .Values.app.volumes.data.pvc }}
-        - name: letsencrypt
-          persistentVolumeClaim:
-            claimName: {{ .Values.app.volumes.letsencrypt.pvc }}
+            claimName: {{ .pvc }}
+      {{- end }}
       containers:
         - name: {{ .Values.app.name }}
           image: {{ .Values.app.image }}
@@ -38,7 +37,7 @@ spec:
             - name: DB_MYSQL_NAME
               value: {{ .Values.app.env.DB_MYSQL_NAME }}
           volumeMounts:
-            - name: data
-              mountPath: {{ .Values.app.volumes.data.mountPath }}
-            - name: letsencrypt
-              mountPath: {{ .Values.app.volumes.letsencrypt.mountPath }}
+          {{- range .Values.app.volumes}}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+          {{- end }}
