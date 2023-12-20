@@ -13,4 +13,4 @@ spec:
     {{- end }}
   type: LoadBalancer
   externalIPs:
-    {{- Values.app.externalIP}}
+    {{- .Values.app.externalIP}}
