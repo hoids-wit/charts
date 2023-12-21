@@ -19,6 +19,10 @@ spec:
       containers:
         - name: {{ .Values.db.name }}
           image: {{ .Values.db.image }}
+          ports:
+            - name: mysql
+              containerPort: {{ .Values.db.port }}
+              protocol: TCP
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: "{{ .Values.db.env.MYSQL_ROOT_PASSWORD }}"
