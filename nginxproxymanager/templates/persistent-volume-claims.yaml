@@ -10,4 +10,5 @@ spec:
     requests:
       storage: {{ .capacity}}
   storageClassName: {{ .storageClassName}}
+---
 {{- end}}

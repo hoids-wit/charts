@@ -12,4 +12,5 @@ spec:
   nfs:
     path: "{{ .path}}"
     server: {{ .server}}
+---
 {{- end }}
