@@ -1,3 +1,4 @@
+{{- if .Values.db.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,3 +36,4 @@ spec:
           volumeMounts:
             - name: {{ .Values.db.volume.name }}
               mountPath: {{ .Values.db.volume.mountPath }}
+{{- end }}
