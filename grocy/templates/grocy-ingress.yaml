@@ -24,7 +24,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .Values.app.name}}-service
+                name: {{ $.Values.app.name}}-service
                 port:
                   name: {{ .portName}}
           {{- end }}
