@@ -27,8 +27,8 @@ spec:
           {{- if .Values.app.ports }}
           {{- range .Values.app.ports }}
             - name: {{ .portName }}
-            containerPort: {{ .targetPort }}
-            protocol: TCP
+              containerPort: {{ .targetPort }}
+              protocol: TCP
           {{- end }}
           {{- end }}
           volumeMounts:
