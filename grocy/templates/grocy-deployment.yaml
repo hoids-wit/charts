@@ -12,8 +12,8 @@ spec:
       labels:
         app: {{ .Values.app.name }}
     spec:
-      volumes:
       {{- if .Values.app.volumes}}
+      volumes:
       {{- range .Values.app.volumes}}
         - name: {{ .name }}
           persistentVolumeClaim:
@@ -23,19 +23,19 @@ spec:
       containers:
         - name: {{ .Values.app.name }}
           image: {{ .Values.app.image }}
-          ports:
           {{- if .Values.app.ports }}
+          ports:
           {{- range .Values.app.ports }}
             - name: {{ .portName }}
               containerPort: {{ .targetPort }}
               protocol: TCP
           {{- end }}
           {{- end }}
-          volumeMounts:
           {{- if .Values.app.volumes }}
+          volumeMounts:
           {{- range .Values.app.volumes}}
             - name: {{ .name }}
-            mountPath: {{ .mountPath }}
-            subPath: {{ .subPath }}
+              mountPath: {{ .mountPath }}
+              subPath: {{ .subPath }}
           {{- end }}
           {{- end }}
