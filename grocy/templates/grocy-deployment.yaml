@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      volumes:
+      {{- if .Values.app.volumes}}
+      {{- range .Values.app.volumes}}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .pvc }}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.app.name }}
+          image: {{ .Values.app.image }}
+          ports:
+          {{- if .Values.app.ports }}
+          {{- range .Values.app.ports }}
+            - name: {{ .portName }}
+            containerPort: {{ .targetPort }}
+            protocol: TCP
+          {{- end }}
+          {{- end }}
+          volumeMounts:
+          {{- if .Values.app.volumes }}
+          {{- range .Values.app.volumes}}
+            - name: {{ .name }}
+            mountPath: {{ .mountPath }}
+            subPath: {{ .subPath }}
+          {{- end }}
+          {{- end }}
