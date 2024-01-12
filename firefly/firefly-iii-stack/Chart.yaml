@@ -5,11 +5,11 @@ description: Installs Firefly III stack (db, app, importer)
 type: application
 dependencies:
 - name: firefly-db
-  version: 0.1.0
+  version: 0.2.1
   condition: firefly-db.enabled
   repository: file://../firefly-db
 - name: firefly-iii
-  version: 1.4.0
+  version: 1.7.1
   condition: firefly-iii.enabled
   repository: file://../firefly-iii
 - name: importer
