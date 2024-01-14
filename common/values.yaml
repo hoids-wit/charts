@@ -1,41 +1,43 @@
-
-
 ingress:
-  - enabled: true
-    host: "example.com"
+  enabled: true
+  host: "optionalSubDomain.example.com"
 
 service:
-  - enabled: true
-  - portName: ""
+  enabled: true
+  portName: "http"
+  port: 80
+  targetPort: 8080
 
 app:
-  - enabled: true
-  - name: ""
-  - image: ""
-  - volumes:
-    - name: ""
-      pvcName: ""
-      mountPath: ""
-      subPath: ""
-      hostPath: ""
-  - env: 
-    - name: ""
-      value: ""
+  enabled: true
+  name: "app"
+  image: "repository:tag"
+  volumes:
+  - name: "app-data"
+    pvcName: "app-pvc"
+    mountPath: "/opt/app/data/"
+    subPath: "data"
+  env: 
+  - name: name
+    value: ""
+  args: []
+  readinessProbe: {}
 
 nfsStorage:
-  - enabled: true
-    storageClassName: class-name
-    pvcName: ""
-    capacity: 2Ti
-    server: 
-    path: /path
+  enabled: true
+  storageClassName: className
+  pvcName: "pvcName"
+  pvcCapacity: 1Gi
+  capacity: 2Ti
+  server: 127.0.0.1
+  path: /mnt/user/applicationDataPath
 
 certManager:
-  - enabled: true
-    secret:
-      name: cloudflare-api-token-secret
-      #resource to store cloudflare's private key
-      key: "letsencrypt-certificate-key"
-    apiToken: ""
-    acmeEmail: "example@gmail.com"
-    cloudflareEmail: "example@gmail.com"
+  enabled: true
+  secret:
+    name: cloudflare-api-token-secret
+    #resource to store cloudflare's private key
+    key: letsencrypt-certificate-key
+  apiToken: ""
+  acmeEmail: example@example.com
+  cloudflareEmail: example@gexample.com
