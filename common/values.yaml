@@ -1,0 +1,41 @@
+
+
+ingress:
+  - enabled: true
+    host: "example.com"
+
+service:
+  - enabled: true
+  - portName: ""
+
+app:
+  - enabled: true
+  - name: ""
+  - image: ""
+  - volumes:
+    - name: ""
+      pvcName: ""
+      mountPath: ""
+      subPath: ""
+      hostPath: ""
+  - env: 
+    - name: ""
+      value: ""
+
+nfsStorage:
+  - enabled: true
+    storageClassName: class-name
+    pvcName: ""
+    capacity: 2Ti
+    server: 
+    path: /path
+
+certManager:
+  - enabled: true
+    secret:
+      name: cloudflare-api-token-secret
+      #resource to store cloudflare's private key
+      key: "letsencrypt-certificate-key"
+    apiToken: ""
+    acmeEmail: "example@gmail.com"
+    cloudflareEmail: "example@gmail.com"

@@ -1,0 +1,16 @@
+{{- if .Values.ingress.enabled }}
+{{- range .Values.nfsStorage}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .pvcName}}-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .pvcCapacity}}
+  storageClassName: {{ .storageClassName}}
+---
+{{- end}}
+{{- end}}

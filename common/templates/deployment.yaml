@@ -1,0 +1,55 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-deployment
+  labels:
+    app: {{ .Values.app.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}-app
+    spec:
+      {{- if .Values.app.volumes }}
+      volumes: 
+      {{- range .Values.app.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .pvcName}}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.app.name }}-app
+          image: {{ .Values.app.image }}
+          {{- if .Values.app.volumes }}
+          volumeMounts:
+          {{- range .Values.app.volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- end }}
+          {{ - if .Values.app.args }}
+          args: {{ toYaml .Values.app.args | nindent 12 }}
+          {{ -end }}
+          {{- if .Values.app.env }}
+          env:
+          {{- range .Values.app.env }}
+            - name: "{{ .name }}"
+              value: "{{ .value }}"
+          {{- end }}
+          {{- end }}
+
+          ports:
+            - name: {{ .Values.service.portName }}
+              containerPort: {{ .Values.service.targetPort }}
+
+          {{ - if .Values.app.readinessProbe }}
+          args: {{ toYaml .Values.app.readinessProbe | nindent 12 }}
+          {{ -end }}
+{{- end }}              
