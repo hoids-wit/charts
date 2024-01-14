@@ -50,6 +50,6 @@ spec:
               containerPort: {{ .Values.service.targetPort }}
 
           {{- if .Values.app.readinessProbe }}
-          args: {{ toYaml .Values.app.readinessProbe | nindent 12 }}
+          readinessProbe: {{ toYaml .Values.app.readinessProbe | nindent 12 }}
           {{- end }}
 {{- end }}              
