@@ -24,8 +24,7 @@ app:
   readinessProbe: {}
 
 nfsStorage:
-  enabled: true
-  storageClassName: className
+- storageClassName: className
   pvcName: "pvcName"
   pvcCapacity: 1Gi
   capacity: 2Ti

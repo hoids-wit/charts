@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled }}
+{{- if .Values.nfsStorage }}
 {{- range .Values.nfsStorage}}
 apiVersion: v1
 kind: PersistentVolumeClaim
