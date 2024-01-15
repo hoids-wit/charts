@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.common.app.name}}-service
 spec:
   selector:
-    app: {{ .Values.common.app.name}}
+    app: {{ .Values.common.app.name}}-app
   ports:
     {{- range .Values.common.service.ports }}
     - name: {{ .portName }}
