@@ -10,6 +10,7 @@ spec:
     - name: {{ .portName }}
       port: {{ .port }}
       targetPort: {{ .targetPort }}
+      protocol: {{ .protocol }}
     {{- end }}
   type: LoadBalancer
   externalIPs:
