@@ -4,11 +4,11 @@ metadata:
   name: {{ .Values.db.serviceName }}-service
 spec:
   selector:
-    app: {{ .Values.app.name}}
+    app: {{ .Values.common.app.name}}
   template:
     metadata:
       labels:
-        app: {{ .Values.app.name}}
+        app: {{ .Values.common.app.name}}
   ports:
     - name: mysql
       port: {{ .Values.db.port}}
