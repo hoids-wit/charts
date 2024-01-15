@@ -1,5 +1,6 @@
 {{- if .Values.nfsStorage }}
 {{- range .Values.nfsStorage }}
+{{- if .createVolume }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -14,5 +15,6 @@ spec:
     path: "{{ .path}}"
     server: {{ .server}}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
