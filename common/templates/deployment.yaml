@@ -47,8 +47,8 @@ spec:
           {{- if .Values.service.ports }}
           ports:
           {{- range .Values.service.ports }}
-            - name: {{ .Values.service.portName }}
-              containerPort: {{ .Values.service.targetPort }}
+            - name: {{ .portName }}
+              containerPort: {{ .targetPort }}
           {{- end }}
           {{- end }}
           
