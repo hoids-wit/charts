@@ -11,8 +11,10 @@ spec:
       labels:
         app: {{ .Values.app.name}}-app
   ports:
-    - name: {{ .Values.service.portName}}
-      port: {{ .Values.service.port}}
-      targetPort: {{ .Values.service.targetPort}}
+    {{- range .Values.service.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
   type: ClusterIP
   {{- end }}
