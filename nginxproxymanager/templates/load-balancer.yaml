@@ -7,7 +7,7 @@ spec:
     app: {{ .Values.common.app.name}}
   ports:
     {{- range .Values.common.app.ports }}
-    - name: {{ .name }}
+    - name: {{ .portName }}
       port: {{ .port }}
       targetPort: {{ .targetPort }}
     {{- end }}
