@@ -44,10 +44,14 @@ spec:
           {{- end }}
           {{- end }}
 
+          {{- if .Values.service.ports }}
           ports:
+          {{- range .Values.service.ports }}
             - name: {{ .Values.service.portName }}
               containerPort: {{ .Values.service.targetPort }}
-
+          {{- end }}
+          {{- end }}
+          
           {{- if .Values.app.readinessProbe }}
           readinessProbe: {{ toYaml .Values.app.readinessProbe | nindent 12 }}
           {{- end }}
