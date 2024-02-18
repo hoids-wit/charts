@@ -33,25 +33,4 @@ spec:
               subPath: "{{ .subPath }}"
           {{- end }}
           {{- end }}
-          {{- if .Values.logseq.deployment.args }}
-          args: {{ toYaml .Values.logseq.deployment.args | nindent 12 }}
-          {{- end }}
-          {{- if .Values.logseq.deployment.env }}
-          env:
-          {{- range .Values.logseq.deployment.env }}
-            - name: "{{ .name }}"
-              value: "{{ .value }}"
-          {{- end }}
-          {{- end }}
-
-          {{- if .service.ports }}
-          ports:
-          {{- range .service.ports }}
-            - name: {{ .portName }}
-              containerPort: {{ .targetPort }}
-          {{- end }}
-          {{- end }}
           
-          {{- if .Values.logseq.deployment.readinessProbe }}
-          readinessProbe: {{ toYaml .Values.logseq.deployment.readinessProbe | nindent 12 }}
-          {{- end }}
