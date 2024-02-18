@@ -1,4 +1,23 @@
 {{- if .Values.gotenberg.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.gotenberg.name}}-service
+spec:
+  selector:
+    app: {{ .Values.gotenberg.name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.gotenberg.name}}-app
+  ports:
+    {{- range .Values.gotenberg.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

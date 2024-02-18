@@ -1,4 +1,23 @@
 {{- if .Values.redis.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redis.name}}-service
+spec:
+  selector:
+    app: {{ .Values.redis.name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redis.name}}-app
+  ports:
+    {{- range .Values.redis.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

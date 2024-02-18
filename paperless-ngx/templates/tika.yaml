@@ -1,4 +1,23 @@
 {{- if .Values.tika.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.tika.name}}-service
+spec:
+  selector:
+    app: {{ .Values.tika.name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tika.name}}-app
+  ports:
+    {{- range .Values.tika.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

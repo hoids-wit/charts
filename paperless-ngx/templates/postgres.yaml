@@ -1,4 +1,23 @@
 {{- if .Values.postgres.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.postgres.name}}-service
+spec:
+  selector:
+    app: {{ .Values.postgres.name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.postgres.name}}-app
+  ports:
+    {{- range .Values.postgres.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,6 +58,13 @@ spec:
             - name: "{{ .name }}"
               mountPath: "{{ .mountPath }}"
               subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- end }}
+          {{- if .Values.postgres.ports }}
+          ports:
+          {{- range .Values.postgres.ports }}
+            - name: {{ .portName }}
+              containerPort: {{ .targetPort }}
           {{- end }}
           {{- end }}
 {{- end }}
