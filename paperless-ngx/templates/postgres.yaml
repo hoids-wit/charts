@@ -26,6 +26,13 @@ spec:
       containers:
         - name: {{ .Values.postgres.name }}-app
           image: {{ .Values.postgres.image }}
+          {{- if .Values.postgres.env }}
+          env:
+          {{- range .Values.postgres.env }}
+            - name: "{{ .name }}"
+              value: "{{ .value }}"
+          {{- end }}
+          {{- end }}
           {{- if .Values.postgres.volumes }}
           volumeMounts:
           {{- range .Values.postgres.volumes }}
