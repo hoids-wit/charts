@@ -36,5 +36,5 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+                command: ["/bin/sh", "-c", "cp /usr/share/nginx/html/* /usr/share/nginx/html-nfs/ -r -y"]
           
