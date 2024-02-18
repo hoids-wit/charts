@@ -1,0 +1,21 @@
+{{- if .Values.tika.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tika.name }}-deployment
+  labels:
+    app: {{ .Values.tika.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.tika.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tika.name }}-app
+    spec:
+      containers:
+        - name: {{ .Values.tika.name }}-app
+          image: {{ .Values.tika.image }}
+{{- end }}

@@ -1,0 +1,37 @@
+{{- if .Values.postgres.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.postgres.name }}-deployment
+  labels:
+    app: {{ .Values.postgres.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.postgres.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.postgres.name }}-app
+    spec:
+      {{- if .Values.postgres.volumes }}
+      volumes: 
+      {{- range .Values.postgres.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .pvcName}}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.postgres.name }}-app
+          image: {{ .Values.postgres.image }}
+          {{- if .Values.postgres.volumes }}
+          volumeMounts:
+          {{- range .Values.postgres.volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- end }}
+{{- end }}

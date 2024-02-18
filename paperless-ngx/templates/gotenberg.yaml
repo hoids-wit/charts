@@ -1,0 +1,29 @@
+{{- if .Values.gotenberg.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.gotenberg.name }}-deployment
+  labels:
+    app: {{ .Values.gotenberg.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.gotenberg.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.gotenberg.name }}-app
+    spec:
+      containers:
+        - name: {{ .Values.gotenberg.name }}-app
+          image: {{ .Values.gotenberg.image }}
+          {{- if .Values.gotenberg.volumes }}
+          volumeMounts:
+          {{- range .Values.gotenberg.volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- end }}
+{{- end }}
