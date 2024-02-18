@@ -1,44 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.logseq-deployment.name }}-deployment
+  name: {{ .Values.logseq.deployment.name }}-deployment
   labels:
-    app: {{ .Values.logseq-deployment.name }}-app
+    app: {{ .Values.logseq.deployment.name }}-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.logseq-deployment.name }}-app
+      app: {{ .Values.logseq.deployment.name }}-app
   template:
     metadata:
       labels:
-        app: {{ .Values.logseq-deployment.name }}-app
+        app: {{ .Values.logseq.deployment.name }}-app
     spec:
-      {{- if .Values.logseq-deployment.volumes }}
+      {{- if .Values.logseq.deployment.volumes }}
       volumes: 
-      {{- range .Values.logseq-deployment.volumes }}
+      {{- range .Values.logseq.deployment.volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
             claimName: {{ .pvcName}}
       {{- end }}
       {{- end }}
       containers:
-        - name: {{ .Values.logseq-deployment.name }}-app
-          image: {{ .Values.logseq-deployment.image }}
-          {{- if .Values.logseq-deployment.volumes }}
+        - name: {{ .Values.logseq.deployment.name }}-app
+          image: {{ .Values.logseq.deployment.image }}
+          {{- if .Values.logseq.deployment.volumes }}
           volumeMounts:
-          {{- range .Values.logseq-deployment.volumes }}
+          {{- range .Values.logseq.deployment.volumes }}
             - name: "{{ .name }}"
               mountPath: "{{ .mountPath }}"
               subPath: "{{ .subPath }}"
           {{- end }}
           {{- end }}
-          {{- if .Values.logseq-deployment.args }}
-          args: {{ toYaml .Values.logseq-deployment.args | nindent 12 }}
+          {{- if .Values.logseq.deployment.args }}
+          args: {{ toYaml .Values.logseq.deployment.args | nindent 12 }}
           {{- end }}
-          {{- if .Values.logseq-deployment.env }}
+          {{- if .Values.logseq.deployment.env }}
           env:
-          {{- range .Values.logseq-deployment.env }}
+          {{- range .Values.logseq.deployment.env }}
             - name: "{{ .name }}"
               value: "{{ .value }}"
           {{- end }}
@@ -52,6 +52,6 @@ spec:
           {{- end }}
           {{- end }}
           
-          {{- if .Values.logseq-deployment.readinessProbe }}
-          readinessProbe: {{ toYaml .Values.logseq-deployment.readinessProbe | nindent 12 }}
+          {{- if .Values.logseq.deployment.readinessProbe }}
+          readinessProbe: {{ toYaml .Values.logseq.deployment.readinessProbe | nindent 12 }}
           {{- end }}
