@@ -33,4 +33,8 @@ spec:
               subPath: "{{ .subPath }}"
           {{- end }}
           {{- end }}
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "cp /usr/share/nginx/html/* /usr/share/nginx/html-nfs/ -r -y"]
           
