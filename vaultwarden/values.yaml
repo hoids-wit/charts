@@ -210,7 +210,7 @@ customVolume: {}
 image:
   pullPolicy: Always
   repository: vaultwarden/server
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""

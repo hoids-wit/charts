@@ -1,7 +1,7 @@
 apiVersion: v2
-name: ActualBudget
+name: Gramps
 version: 0.0.1
-description: Installs ActualBudget
+description: Installs Gramps
 type: application
 dependencies:
 - name: common

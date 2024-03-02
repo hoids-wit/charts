@@ -25,6 +25,7 @@ app:
 
 nfsStorage:
 - storageClassName: className
+  createPv: "true"
   pvcName: "pvcName"
   pvcCapacity: 1Gi
   capacity: 2Ti
