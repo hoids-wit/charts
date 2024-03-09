@@ -41,7 +41,7 @@ persistence:
     existingClaim: {{ .Values.immich.persistence.library.existingClaim }}
   external-library:
     enabled: true
-    mountPath: /external/nik
+    mountPath: /external-library
     existingClaim: {{ .Values.immich.persistence.externalLibrary.existingClaim }}
 {{- end }}
 
