@@ -42,7 +42,7 @@ persistence:
   external-library:
     enabled: true
     mountPath: /external/nik
-    existingClaim: {{ .Values.immich.persistence.externalLibrary.existingClaim }}
+    existingClaim: {{ .Values.immich.persistence.external-library.existingClaim }}
 {{- end }}
 
 {{- $ctx := deepCopy . -}}
