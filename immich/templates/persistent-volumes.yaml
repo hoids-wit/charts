@@ -1,25 +1,13 @@
+{{- if .Values.nfsStorage }}
 {{- range .Values.nfsStorage }}
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: {{ .storageClassName }}
-provisioner: nfs.csi.k8s.io
-parameters:
-  server: {{ .server }}
-  share: "{{ .path }}"
-reclaimPolicy: Retain
-volumeBindingMode: Immediate
-mountOptions:
-  - hard
-  - nfsvers=4.1
----
+{{- if .volumeName }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .storageClassName}}-pv
+  name: {{ .volumeName}}
 spec:
   capacity:
-    storage: {{ .capacity}}
+    storage: {{ .pvcCapacity}}
   accessModes:
     - ReadWriteMany
   storageClassName: {{ .storageClassName}}
@@ -27,16 +15,6 @@ spec:
     path: "{{ .path}}"
     server: {{ .server}}
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ .storageClassName}}-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: {{ .capacity}}
-  storageClassName: {{ .storageClassName}}
----
+{{- end }}
+{{- end }}
 {{- end }}
