@@ -43,7 +43,7 @@ spec:
               value: "{{ .value }}"
           {{- end }}
           {{- end }}
-          {{- if .Values.secret.enable }}
+          {{- if .Values.app.secret.enable }}
           envFrom:
             - secretRef:
                 name: {{ .Values.app.secret.name }}
