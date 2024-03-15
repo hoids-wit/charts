@@ -1,0 +1,56 @@
+{{- if .Values.redis.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redis.name}}-service
+spec:
+  selector:
+    app: {{ .Values.redis.name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redis.name}}-app
+  ports:
+    {{- range .Values.redis.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redis.name }}-deployment
+  labels:
+    app: {{ .Values.redis.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.redis.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redis.name }}-app
+    spec:
+      {{- if .Values.redis.volumes }}
+      volumes: 
+      {{- range .Values.redis.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .pvcName}}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.redis.name }}-app
+          image: {{ .Values.redis.image }}
+          {{- if .Values.redis.volumes }}
+          volumeMounts:
+          {{- range .Values.redis.volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- end }}
+{{- end }}

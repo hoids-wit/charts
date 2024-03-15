@@ -43,7 +43,11 @@ spec:
               value: "{{ .value }}"
           {{- end }}
           {{- end }}
-
+          {{- if .Values.secret.enable }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.apps.tooljet.secret.name }}
+          {{- end}}
           {{- if .Values.service.ports }}
           ports:
           {{- range .Values.service.ports }}
