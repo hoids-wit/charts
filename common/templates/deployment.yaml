@@ -46,7 +46,7 @@ spec:
           {{- if .Values.secret.enable }}
           envFrom:
             - secretRef:
-                name: {{ .Values.apps.tooljet.secret.name }}
+                name: {{ .Values.app.secret.name }}
           {{- end}}
           {{- if .Values.service.ports }}
           ports:
