@@ -43,11 +43,13 @@ spec:
               value: "{{ .value }}"
           {{- end }}
           {{- end }}
+          {{- if .Values.app.secret }}
           {{- if .Values.app.secret.enable }}
           envFrom:
             - secretRef:
                 name: {{ .Values.app.secret.name }}
-          {{- end}}
+          {{- end }}
+          {{- end }}
           {{- if .Values.service.ports }}
           ports:
           {{- range .Values.service.ports }}
