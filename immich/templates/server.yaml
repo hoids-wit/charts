@@ -44,7 +44,7 @@ persistence:
     enabled: true
     mountPath: /external-library
     existingClaim: {{ .Values.immich.persistence.externalLibrary.existingClaim }}
-    subPath: {{ .Values.immich.persistence.library.subPath }}
+    subPath: {{ .Values.immich.persistence.externalLibrary.subPath }}
 {{- end }}
 
 {{- $ctx := deepCopy . -}}
