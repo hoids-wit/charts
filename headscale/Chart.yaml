@@ -1,0 +1,9 @@
+apiVersion: v2
+name: SilverBullet
+version: 0.0.1
+description: Installs SilverBullet
+type: application
+dependencies:
+- name: common
+  version: 0.0.1
+  repository: file://../common
