@@ -21,7 +21,7 @@ spec:
   rules:
   # add a rule for each host
     {{- range .Values.ingress.hosts }}
-    - host: {{ .host }}
+    - host: {{ . }}
       http:
         paths:
           {{- range .Values.service.ports }}
