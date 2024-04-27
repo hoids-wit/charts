@@ -14,11 +14,14 @@ spec:
         app: {{ .Values.app.name }}-service
   tls:
   - hosts:
-    - {{ .Values.ingress.host }}
+    {{- range .Values.ingress.hosts }}
+    - {{ . }}
+    {{- end}}
     secretName: {{ .Values.app.name }}-ingress-tls
   rules:
   # add a rule for each host
-    - host: {{ .Values.ingress.host }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host }}
       http:
         paths:
           {{- range .Values.service.ports }}
@@ -30,4 +33,5 @@ spec:
                 port:
                   name: {{ .portName }}
           {{- end }}
+    {{- end }}                  
 {{- end }}                  

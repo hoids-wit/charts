@@ -1,6 +1,7 @@
 ingress:
   enabled: true
-  host: "optionalSubDomain.example.com"
+  hosts: 
+    - "optionalSubDomain.example.com"
 
 service:
   enabled: true
