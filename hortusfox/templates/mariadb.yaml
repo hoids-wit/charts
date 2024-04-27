@@ -1,0 +1,70 @@
+{{- if .Values.mariadb.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mariadb.name}}-service
+spec:
+  selector:
+    app: {{ .Values.mariadb.name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mariadb.name}}-app
+  ports:
+    {{- range .Values.mariadb.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mariadb.name }}-deployment
+  labels:
+    app: {{ .Values.mariadb.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.mariadb.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mariadb.name }}-app
+    spec:
+      {{- if .Values.mariadb.volumes }}
+      volumes: 
+      {{- range .Values.mariadb.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .pvcName}}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.mariadb.name }}-app
+          image: {{ .Values.mariadb.image }}
+          {{- if .Values.mariadb.env }}
+          env:
+          {{- range .Values.mariadb.env }}
+            - name: "{{ .name }}"
+              value: "{{ .value }}"
+          {{- end }}
+          {{- end }}
+          {{- if .Values.mariadb.volumes }}
+          volumeMounts:
+          {{- range .Values.mariadb.volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- end }}
+          {{- if .Values.mariadb.ports }}
+          ports:
+          {{- range .Values.mariadb.ports }}
+            - name: {{ .portName }}
+              containerPort: {{ .targetPort }}
+          {{- end }}
+          {{- end }}
+{{- end }}
