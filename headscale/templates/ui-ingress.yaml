@@ -13,13 +13,13 @@ spec:
         app: {{ .Values.headscaleui.name }}-service
   tls:
   - hosts:
-    {{- range .Values.headscaleui.ingress.hosts }}
+    {{- range .Values.headscaleui.hosts }}
     - {{ . }}
     {{- end}}
     secretName: {{ .Values.headscaleui.name }}-ingress-tls
   rules:
   # add a rule for each host
-    {{- range .Values.headscaleui.ingress.hosts }}
+    {{- range .Values.headscaleui.hosts }}
     - host: {{ . }}
       http:
         paths:
