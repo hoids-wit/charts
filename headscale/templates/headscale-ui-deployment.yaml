@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.headscale-ui.name }}-ui-deployment
+  name: {{ .Values.headscale-ui.name }}-deployment
   labels:
-    app: {{ .Values.headscale-ui.name }}-ui-app
+    app: {{ .Values.headscale-ui.name }}-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.headscale-ui.name }}-ui-app
+      app: {{ .Values.headscale-ui.name }}-app
   template:
     metadata:
       labels:
-        app: {{ .Values.headscale-ui.name }}-ui-app
+        app: {{ .Values.headscale-ui.name }}-app
     spec:
       {{- if .Values.headscale-ui.volumes }}
       volumes: 
@@ -23,7 +23,7 @@ spec:
       {{- end }}
       {{- end }}
       containers:
-        - name: {{ .Values.headscale-ui.name }}-ui-app
+        - name: {{ .Values.headscale-ui.name }}-app
           image: {{ .Values.headscale-ui.image }}
           {{- if .Values.headscale-ui.volumes }}
           volumeMounts:
