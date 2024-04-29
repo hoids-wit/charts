@@ -1,72 +1,72 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.headscale-ui.name }}-deployment
+  name: {{ .Values.headscaleui.name }}-deployment
   labels:
-    app: {{ .Values.headscale-ui.name }}-app
+    app: {{ .Values.headscaleui.name }}-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.headscale-ui.name }}-app
+      app: {{ .Values.headscaleui.name }}-app
   template:
     metadata:
       labels:
-        app: {{ .Values.headscale-ui.name }}-app
+        app: {{ .Values.headscaleui.name }}-app
     spec:
-      {{- if .Values.headscale-ui.volumes }}
+      {{- if .Values.headscaleui.volumes }}
       volumes: 
-      {{- range .Values.headscale-ui.volumes }}
+      {{- range .Values.headscaleui.volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
             claimName: {{ .pvcName}}
       {{- end }}
       {{- end }}
       containers:
-        - name: {{ .Values.headscale-ui.name }}-app
-          image: {{ .Values.headscale-ui.image }}
-          {{- if .Values.headscale-ui.volumes }}
+        - name: {{ .Values.headscaleui.name }}-app
+          image: {{ .Values.headscaleui.image }}
+          {{- if .Values.headscaleui.volumes }}
           volumeMounts:
-          {{- range .Values.headscale-ui.volumes }}
+          {{- range .Values.headscaleui.volumes }}
             - name: "{{ .name }}"
               mountPath: "{{ .mountPath }}"
               subPath: "{{ .subPath }}"
           {{- end }}
-          {{- if .Values.headscale-ui.usb }}
-          {{- range .Values.headscale-ui.usb }}
+          {{- if .Values.headscaleui.usb }}
+          {{- range .Values.headscaleui.usb }}
             - name: "{{.name}}"
               mountPath: "{{.mountPath}}"
           {{- end }}
           {{- end }}
           {{- end }}
-          {{- if .Values.headscale-ui.commands }}
-          args: {{ toYaml .Values.headscale-ui.commands | nindent 12 }}
+          {{- if .Values.headscaleui.commands }}
+          args: {{ toYaml .Values.headscaleui.commands | nindent 12 }}
           {{- end }}
-          {{- if .Values.headscale-ui.args }}
-          args: {{ toYaml .Values.headscale-ui.args | nindent 12 }}
+          {{- if .Values.headscaleui.args }}
+          args: {{ toYaml .Values.headscaleui.args | nindent 12 }}
           {{- end }}
-          {{- if .Values.headscale-ui.env }}
+          {{- if .Values.headscaleui.env }}
           env:
-          {{- range .Values.headscale-ui.env }}
+          {{- range .Values.headscaleui.env }}
             - name: "{{ .name }}"
               value: "{{ .value }}"
           {{- end }}
           {{- end }}
-          {{- if .Values.headscale-ui.secret }}
-          {{- if .Values.headscale-ui.secret.enable }}
+          {{- if .Values.headscaleui.secret }}
+          {{- if .Values.headscaleui.secret.enable }}
           envFrom:
             - secretRef:
-                name: {{ .Values.headscale-ui.secret.name }}
+                name: {{ .Values.headscaleui.secret.name }}
           {{- end }}
           {{- end }}
-          {{- if .Values.headscale-ui.ports }}
+          {{- if .Values.headscaleui.ports }}
           ports:
-          {{- range .Values.headscale-ui.ports }}
+          {{- range .Values.headscaleui.ports }}
             - name: {{ .portName }}
               containerPort: {{ .targetPort }}
           {{- end }}
           {{- end }}
           
-          {{- if .Values.headscale-ui.readinessProbe }}
-          readinessProbe: {{ toYaml .Values.headscale-ui.readinessProbe | nindent 12 }}
+          {{- if .Values.headscaleui.readinessProbe }}
+          readinessProbe: {{ toYaml .Values.headscaleui.readinessProbe | nindent 12 }}
           {{- end }}
