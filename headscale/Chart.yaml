@@ -5,5 +5,5 @@ description: Installs headscale
 type: application
 dependencies:
 - name: common
-  version: 0.0.2
+  version: 0.0.3
   repository: file://../common

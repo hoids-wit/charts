@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-deployment
+  labels:
+    app: {{ .Values.app.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}-app
+    spec:
+      {{- if .Values.app.volumes }}
+      volumes: 
+      {{- range .Values.app.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .pvcName}}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.app.usb }}
+      {{- range .Values.app.usb }}
+        - name: "{{.name}}"
+          hostPath:
+            path: "{{.mountPath}}"
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.app.name }}-app
+          image: {{ .Values.app.image }}
+          {{- if .Values.app.volumes }}
+          volumeMounts:
+          {{- range .Values.app.volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- if .Values.app.usb }}
+          {{- range .Values.app.usb }}
+            - name: "{{.name}}"
+              mountPath: "{{.mountPath}}"
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.app.commands }}
+          args: {{ toYaml .Values.app.commands | nindent 12 }}
+          {{- end }}
+          {{- if .Values.app.args }}
+          args: {{ toYaml .Values.app.args | nindent 12 }}
+          {{- end }}
+          {{- if .Values.app.env }}
+          env:
+          {{- range .Values.app.env }}
+            - name: "{{ .name }}"
+              value: "{{ .value }}"
+          {{- end }}
+          {{- end }}
+          {{- if .Values.app.secret }}
+          {{- if .Values.app.secret.enable }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.app.secret.name }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.service.ports }}
+          ports:
+          {{- range .Values.service.ports }}
+            - name: {{ .portName }}
+              containerPort: {{ .targetPort }}
+          {{- end }}
+          {{- end }}
+          
+          {{- if .Values.app.readinessProbe }}
+          readinessProbe: {{ toYaml .Values.app.readinessProbe | nindent 12 }}
+          {{- end }}
