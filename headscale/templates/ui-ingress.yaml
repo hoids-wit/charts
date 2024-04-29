@@ -23,7 +23,7 @@ spec:
     - host: {{ . }}
       http:
         paths:
-          {{- range $.Values.headscaleui.service.ports }}
+          {{- range $.Values.headscaleui.ports }}
           - path: {{ .path }}
             pathType: Prefix
             backend:
