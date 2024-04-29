@@ -1,9 +1,9 @@
 apiVersion: v2
-name: SilverBullet
+name: headscale
 version: 0.0.1
-description: Installs SilverBullet
+description: Installs headscale
 type: application
 dependencies:
 - name: common
-  version: 0.0.1
+  version: 0.0.2
   repository: file://../common
