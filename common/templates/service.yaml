@@ -1,5 +1,6 @@
 {{- range .Values.apps }}
-{{- if .service && .service.enabled }}
+{{- if .service }}
+{{- if .service.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -19,4 +20,5 @@ spec:
     {{- end }}
   type: ClusterIP
   {{- end }}
+{{- end }}
 {{- end }}
