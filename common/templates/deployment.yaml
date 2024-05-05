@@ -1,69 +1,70 @@
+{{- range Values.apps }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.app.name }}-deployment
+  name: {{ .name }}-deployment
   labels:
-    app: {{ .Values.app.name }}-app
+    app: {{ .name }}-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.app.name }}-app
+      app: {{ .name }}-app
   template:
     metadata:
       labels:
-        app: {{ .Values.app.name }}-app
+        app: {{ .name }}-app
     spec:
-      {{- if .Values.app.volumes }}
+      {{- if .volumes }}
       volumes: 
-      {{- range .Values.app.volumes }}
+      {{- range .volumes }}
         - name: {{ .name }}
           persistentVolumeClaim:
             claimName: {{ .pvcName}}
       {{- end }}
       {{- end }}
-      {{- if .Values.app.usb }}
-      {{- range .Values.app.usb }}
+      {{- if .usb }}
+      {{- range .usb }}
         - name: "{{.name}}"
           hostPath:
             path: "{{.mountPath}}"
       {{- end }}
       {{- end }}
       containers:
-        - name: {{ .Values.app.name }}-app
-          image: {{ .Values.app.image }}
-          {{- if .Values.app.volumes }}
+        - name: {{ .name }}-app
+          image: {{ .image }}
+          {{- if .volumes }}
           volumeMounts:
-          {{- range .Values.app.volumes }}
+          {{- range .volumes }}
             - name: "{{ .name }}"
               mountPath: "{{ .mountPath }}"
               subPath: "{{ .subPath }}"
           {{- end }}
-          {{- if .Values.app.usb }}
-          {{- range .Values.app.usb }}
+          {{- if .usb }}
+          {{- range .usb }}
             - name: "{{.name}}"
               mountPath: "{{.mountPath}}"
           {{- end }}
           {{- end }}
           {{- end }}
-          {{- if .Values.app.commands }}
-          args: {{ toYaml .Values.app.commands | nindent 12 }}
+          {{- if .commands }}
+          args: {{ toYaml .commands | nindent 12 }}
           {{- end }}
-          {{- if .Values.app.args }}
-          args: {{ toYaml .Values.app.args | nindent 12 }}
+          {{- if .args }}
+          args: {{ toYaml .args | nindent 12 }}
           {{- end }}
-          {{- if .Values.app.env }}
+          {{- if .env }}
           env:
-          {{- range .Values.app.env }}
+          {{- range .env }}
             - name: "{{ .name }}"
               value: "{{ .value }}"
           {{- end }}
           {{- end }}
-          {{- if .Values.app.secret }}
-          {{- if .Values.app.secret.enable }}
+          {{- if .secret }}
+          {{- if .secret.enable }}
           envFrom:
             - secretRef:
-                name: {{ .Values.app.secret.name }}
+                name: {{ .secret.name }}
           {{- end }}
           {{- end }}
           {{- if .Values.service.ports }}
@@ -74,6 +75,7 @@ spec:
           {{- end }}
           {{- end }}
           
-          {{- if .Values.app.readinessProbe }}
-          readinessProbe: {{ toYaml .Values.app.readinessProbe | nindent 12 }}
+          {{- if .readinessProbe }}
+          readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
+{{- end }}

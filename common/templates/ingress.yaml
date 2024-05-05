@@ -7,6 +7,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     cert-manager.io/issuer: lets-encrypt
+    {{ range .Values.ingress.annotations }}
+      {{- .}}
+    {{- end }}
+
 spec:
   template:
     metadata:

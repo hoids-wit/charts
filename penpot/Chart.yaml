@@ -1,0 +1,8 @@
+apiVersion: v2
+name: penpot
+description: Installs Penpot
+version: 0.0.1
+dependencies:
+- name: common
+  version: 0.0.4
+  repository: file://../common
