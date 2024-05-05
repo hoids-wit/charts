@@ -67,11 +67,13 @@ spec:
                 name: {{ .secret.name }}
           {{- end }}
           {{- end }}
+          {{- if .service }}
           {{- if .service.ports }}
           ports:
           {{- range .service.ports }}
             - name: {{ .portName }}
               containerPort: {{ .targetPort }}
+          {{- end }}
           {{- end }}
           {{- end }}
           
