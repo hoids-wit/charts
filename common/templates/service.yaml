@@ -1,20 +1,22 @@
-{{- if .Values.service.enabled }}
+{{- range .Values.apps }}
+{{- if .service.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.app.name}}-service
+  name: {{ .name}}-service
 spec:
   selector:
-    app: {{ .Values.app.name}}-app
+    app: {{ .name}}-app
   template:
     metadata:
       labels:
-        app: {{ .Values.app.name}}-app
+        app: {{ .name}}-app
   ports:
-    {{- range .Values.service.ports }}
+    {{- range .service.ports }}
     - name: {{ .portName }}
       port: {{ .port }}
       targetPort: {{ .targetPort }}
     {{- end }}
   type: ClusterIP
   {{- end }}
+{{- end }}
