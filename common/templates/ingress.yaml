@@ -21,25 +21,47 @@ spec:
   tls:
   - hosts:
     {{- range .ingress.hosts }}
-    - {{ . }}
+    - {{ .hostname }}
     {{- end}}
     secretName: {{ .name }}-ingress-tls
   rules:
   # add a rule for each host
     {{- range .ingress.hosts }}
-    - host: {{ . }}
+    - host: {{ .hostname }}
       http:
         paths:
-          {{- range $.service.ports }}
+          {{- range .ports }}
           - path: {{ .path }}
             pathType: Prefix
             backend:
               service:
-                name: {{ $.name }}-service
+                name: {{ .serviceName }}-service
                 port:
                   name: {{ .portName }}
           {{- end }}
     {{- end }}                  
 {{- end }}                  
+{{- end }}
+{{- if .service }}
+{{- if .service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name}}-service
+spec:
+  selector:
+    app: {{ .name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .name}}-app
+  ports:
+    {{- range .service.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+  {{- end }}
 {{- end }}
 {{- end }}
