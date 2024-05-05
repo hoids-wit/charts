@@ -42,6 +42,7 @@ spec:
     {{- end }}                  
 {{- end }}                  
 {{- end }}
+---
 {{- if .service }}
 {{- if .service.enabled }}
 apiVersion: v1
@@ -64,4 +65,5 @@ spec:
   type: ClusterIP
   {{- end }}
 {{- end }}
+---
 {{- end }}
