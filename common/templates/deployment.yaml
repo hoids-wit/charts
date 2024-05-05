@@ -80,4 +80,5 @@ spec:
           {{- if .readinessProbe }}
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
+---
 {{- end }}
