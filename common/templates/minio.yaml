@@ -62,7 +62,7 @@ spec:
               subPath: "{{ .subPath }}"
           {{- end }}
           {{- end }}
-          {{- if .commands }}
+          {{- if .Values.minio.commands }}
           args: {{ toYaml .commands | nindent 12 }}
           {{- end }}
           {{- if .Values.minio.ports }}
