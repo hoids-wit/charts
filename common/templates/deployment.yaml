@@ -81,4 +81,71 @@ spec:
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
 ---
+{{- if .ingress }}
+{{- if .ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .name }}-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    cert-manager.io/issuer: lets-encrypt
+    {{ range .ingress.annotations }}
+      {{- .}}
+    {{- end }}
+
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}-service
+  tls:
+  - hosts:
+    {{- range .ingress.hosts }}
+    - {{ .hostname }}
+    {{- end}}
+    secretName: {{ .name }}-ingress-tls
+  rules:
+  # add a rule for each host
+    {{- range .ingress.hosts }}
+    - host: {{ .hostname }}
+      http:
+        paths:
+          {{- range .ports }}
+          - path: {{ .path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .serviceName }}-service
+                port:
+                  name: {{ .portName }}
+          {{- end }}
+    {{- end }}                  
+{{- end }}                  
+{{- end }}
+---
+{{- if .service }}
+{{- if .service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name}}-service
+spec:
+  selector:
+    app: {{ .name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .name}}-app
+  ports:
+    {{- range .service.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+  {{- end }}
+{{- end }}
+---
 {{- end }}

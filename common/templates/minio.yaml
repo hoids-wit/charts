@@ -1,0 +1,75 @@
+{{- if .Values.minio.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.minio.name}}-service
+spec:
+  selector:
+    app: {{ .Values.minio.name}}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.minio.name}}-app
+  ports:
+    {{- range .Values.minio.ports }}
+    - name: {{ .portName }}
+      port: {{ .port }}
+      targetPort: {{ .targetPort }}
+    {{- end }}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.minio.name }}-deployment
+  labels:
+    app: {{ .Values.minio.name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.minio.name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.minio.name }}-app
+    spec:
+      {{- if .Values.minio.volumes }}
+      volumes: 
+      {{- range .Values.minio.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .pvcName}}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.minio.name }}-app
+          image: {{ .Values.minio.image }}
+          env:
+            - name: MINIO_ROOT_USER
+              value: "{{ .Values.minio.rootUser }}"
+            - name: MINIO_ROOT_USER
+              value: "{{ .Values.minio.rootPassword }}"
+          {{- range .Values.minio.env }}
+            - name: "{{ .name }}"
+              value: "{{ .value }}"
+          {{- end }}
+          {{- if .Values.minio.volumes }}
+          volumeMounts:
+          {{- range .Values.minio.volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              subPath: "{{ .subPath }}"
+          {{- end }}
+          {{- end }}
+          {{- if .commands }}
+          args: {{ toYaml .commands | nindent 12 }}
+          {{- end }}
+          {{- if .Values.minio.ports }}
+          ports:
+          {{- range .Values.minio.ports }}
+            - name: {{ .portName }}
+              containerPort: {{ .targetPort }}
+          {{- end }}
+          {{- end }}
+{{- end }}
