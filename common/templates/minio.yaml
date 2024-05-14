@@ -63,7 +63,7 @@ spec:
           {{- end }}
           {{- end }}
           {{- if .Values.minio.commands }}
-          commands: {{ toYaml .Values.minio.commands | nindent 12 }}
+          args: {{ toYaml .Values.minio.commands | nindent 12 }}
           {{- end }}
           {{- if .Values.minio.ports }}
           ports:
