@@ -1,3 +1,4 @@
+{{- if .Values.postgres }}
 {{- if .Values.postgres.enabled }}
 apiVersion: v1
 kind: Service
@@ -71,4 +72,5 @@ spec:
               containerPort: {{ .targetPort }}
           {{- end }}
           {{- end }}
+{{- end }}
 {{- end }}
