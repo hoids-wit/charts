@@ -57,6 +57,9 @@ spec:
             - name: "{{ .name }}"
               value: "{{ .value }}"
           {{- end }}
+          {{- if .args }}
+          args: {{ toYaml .args | nindent 12 }}
+          {{- end }}
           {{- if .Values.postgres.volumes }}
           volumeMounts:
           {{- range .Values.postgres.volumes }}
