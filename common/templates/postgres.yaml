@@ -54,8 +54,8 @@ spec:
           - name: POSTGRES_PASSWORD
             value: "{{ .Values.postgres.password }}"
           {{- range .Values.postgres.env }}
-            - name: "{{ .name }}"
-              value: "{{ .value }}"
+          - name: "{{ .name }}"
+            value: "{{ .value }}"
           {{- end }}
           {{- if .args }}
           args: {{ toYaml .args | nindent 12 }}
