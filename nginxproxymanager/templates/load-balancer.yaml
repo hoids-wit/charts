@@ -18,4 +18,5 @@ spec:
     {{- range .externalIPs }}
     - {{ . }}
     {{- end }}
+---
 {{- end }}
