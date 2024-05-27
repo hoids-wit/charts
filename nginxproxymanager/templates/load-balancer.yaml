@@ -1,12 +1,13 @@
+{{- range .Values.services }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.common.app.name}}-service
+  name: {{ .name}}-service
 spec:
   selector:
-    app: {{ .Values.common.app.name}}-app
+    app: {{ .appName}}-app
   ports:
-    {{- range .Values.common.service.ports }}
+    {{- range .ports }}
     - name: {{ .portName }}
       port: {{ .port }}
       targetPort: {{ .targetPort }}
@@ -14,6 +15,7 @@ spec:
     {{- end }}
   type: LoadBalancer
   externalIPs:
-    {{- range .Values.common.service.externalIPs }}
+    {{- range .externalIPs }}
     - {{ . }}
     {{- end }}
+{{- end }}
