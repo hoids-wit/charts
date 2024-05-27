@@ -36,5 +36,5 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: ["/bin/sh", "-c", "{{ .Values.logseq.deployment.post-start-command}}"]
+                command: ["/bin/sh", "-c", "{{ .Values.logseq.deployment.postStartCommand}}"]
           
