@@ -170,7 +170,8 @@ kind: Secret
 metadata:
   name: {{ .secretName }}
 type: Opaque
-stringData: "{{ .secretValue }}"
+stringData: 
+  {{ .secretKey }}: "{{ .secretValue }}"
 {{- end }}
 {{- end }}
 ---
