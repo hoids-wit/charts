@@ -40,7 +40,7 @@ spec:
       containers:
         - name: {{ .name }}-app
           image: {{ .image }}
-          {{- if .volumes }}
+          {{- if or (.volumes) (.secretVolumes) }}
           volumeMounts:
           {{- range .volumes }}
             - name: "{{ .name }}"
