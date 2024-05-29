@@ -5,7 +5,7 @@ metadata:
   name: cloudflare-api-token-secret
 type: Opaque
 stringData:
-  api-token: {{ .Values.certManager.cloudflareAPIToken}}
+  api-token: "{{ .Values.certManager.cloudflareAPIToken}}"
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
