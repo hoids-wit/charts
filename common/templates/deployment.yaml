@@ -27,6 +27,9 @@ spec:
         - name: "{{ .name}}"
           secret:
             secretName: "{{ .secretName }}"
+            items:
+            - key: "{{ .secretKey }}"
+              path: "{{ .secretPath }}"
       {{- end }}
       {{- end }}
       {{- end }}
