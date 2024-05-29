@@ -164,12 +164,14 @@ spec:
 {{- end }}
 ---
 {{- if .secretVolumes }}
+{{- range .secretVolumes }}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: cloudflare-api-token-secret
+  name: {{ .name }}
 type: Opaque
 stringData: "{{ .secretValue }}"
+{{- end }}
 {{- end }}
 ---
 {{- end }}
