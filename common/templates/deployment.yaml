@@ -15,7 +15,7 @@ spec:
       labels:
         app: {{ .name }}-app
     spec:
-      {{- if .volumes }}
+      {{- if or (.volumes) (.secretVolumes) }}
       volumes: 
       {{- range .volumes }}
         - name: {{ .name }}
