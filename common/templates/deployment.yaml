@@ -168,7 +168,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .name }}
+  name: {{ .secretName }}
 type: Opaque
 stringData: 
   key: "{{ .secretValue }}"
