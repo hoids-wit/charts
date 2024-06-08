@@ -6,7 +6,7 @@ metadata:
   {{- if .annotations }}
   annotations:
   {{- range .annotations }}
-    {{- .key }}:"{{- .value }}"
+    {{ .key }}: "{{- .value }}"
   {{- end }}
   {{- end }}
 spec:
