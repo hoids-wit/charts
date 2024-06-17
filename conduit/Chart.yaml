@@ -1,0 +1,8 @@
+apiVersion: v2
+name: Conduit
+description: Installs Conduit
+version: 0.0.1
+dependencies:
+- name: common
+  version: 0.0.5
+  repository: file://../common
