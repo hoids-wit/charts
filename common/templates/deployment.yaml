@@ -15,10 +15,6 @@ spec:
       labels:
         app: {{ .name }}-app
     spec:
-      dnsPolicy: "ClusterFirst"
-      dnsConfig:
-        nameservers:
-          - {{ .nameserver }}
       {{- if or (.volumes) (.secretVolumes) }}
       volumes: 
       {{- range .volumes }}
