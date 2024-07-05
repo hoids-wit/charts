@@ -166,17 +166,17 @@ spec:
           {{- end }}
           {{- end }}
            
-           {{- if .securityContext }}
+          {{- if .securityContext }}
           securityContext:
           {{- if .securityContext.capabilities }}
             capabilities:
               add:
-          {{- range .securityContext.capabilities }}
-            - {{ . }}
+            {{- range .securityContext.capabilities }}
+              - {{ . }}
+            {{- end }}
           {{- end }}
           {{- end }}
-          {{- end }}
-          
+
           {{- if .readinessProbe }}
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
