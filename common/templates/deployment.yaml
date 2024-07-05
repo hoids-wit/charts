@@ -102,7 +102,6 @@ spec:
       {{- range .sidecars }}
         - name: {{ .name }}-app
           image: {{ .image }}
-          restartPolicy: "Always"
           {{- if or (.volumes) (.secretVolumes) }}
           volumeMounts:
           {{- range .volumes }}
