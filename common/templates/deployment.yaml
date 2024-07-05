@@ -94,10 +94,22 @@ spec:
           {{- end }}
           {{- end }}
           {{- end }}
+
+          {{- if .securityContext }}
+          securityContext:
+          {{- if .securityContext.capabilities }}
+            capabilities:
+              add:
+          {{- range .securityContext.capabilities }}
+            - {{ . }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
           
           {{- if .readinessProbe }}
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
+
       {{- if .sidecars }}
       {{- range .sidecars }}
         - name: {{ .name }}-app
