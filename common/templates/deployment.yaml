@@ -98,9 +98,8 @@ spec:
           {{- if .readinessProbe }}
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
-      {{- if .initContainers }}
-      {{- range .initContainers }}
-      initContainers:
+      {{- if .sidecars }}
+      {{- range .sidecars }}
         - name: {{ .name }}-app
           image: {{ .image }}
           restartPolicy: "Always"
