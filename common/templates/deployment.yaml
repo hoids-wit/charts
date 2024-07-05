@@ -98,6 +98,68 @@ spec:
           {{- if .readinessProbe }}
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
+      {{- if .initContainers }}
+      {{- range .initContainers }}
+      initContainers:
+        - name: {{ .name }}-app
+          image: {{ .image }}
+          {{- if or (.volumes) (.secretVolumes) }}
+          volumeMounts:
+          {{- range .volumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+              {{- if .subPath}}
+              subPath: "{{ .subPath }}"
+              {{- end }}
+          {{- end }}
+          {{- if .secretVolumes }}
+          {{- range .secretVolumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+          {{- end }}
+          {{- end }}
+          {{- if .usb }}
+          {{- range .usb }}
+            - name: "{{.name}}"
+              mountPath: "{{.mountPath}}"
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if .commands }}
+          args: {{ toYaml .commands | nindent 12 }}
+          {{- end }}
+          {{- if .args }}
+          args: {{ toYaml .args | nindent 12 }}
+          {{- end }}
+          {{- if .env }}
+          env:
+          {{- range .env }}
+            - name: "{{ .name }}"
+              value: "{{ .value }}"
+          {{- end }}
+          {{- end }}
+          {{- if .secret }}
+          {{- if .secret.enable }}
+          envFrom:
+            - secretRef:
+                name: {{ .secret.name }}
+          {{- end }}
+          {{- end }}
+          {{- if .service }}
+          {{- if .service.ports }}
+          ports:
+          {{- range .service.ports }}
+            - name: {{ .portName }}
+              containerPort: {{ .targetPort }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          
+          {{- if .readinessProbe }}
+          readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
+          {{- end }}
+      {{- end }}
+      {{- end }}
 ---
 {{- if .ingress }}
 {{- if .ingress.enabled }}
