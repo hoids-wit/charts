@@ -26,16 +26,4 @@ spec:
           apiTokenSecretRef:
             name: {{ .Values.certManager.secret.name }}
             key: api-token
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: petecca-com
-spec:
-  secretName: petecca-com-tls
-  issuerRef:
-    kind: Issuer
-    name: lets-encrypt
-  dnsNames:
-  - '*.petecca.com'
 {{- end }}
