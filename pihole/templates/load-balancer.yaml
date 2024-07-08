@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.common.app.name}}-service
+  name: {{ .Values.common.service.app.name}}-service
 spec:
   selector:
-    app: {{ .Values.common.app.name}}-app
+    app: {{ .Values.common.service.app.name}}-app
   ports:
     {{- range .Values.common.service.ports }}
     - name: {{ .portName }}
