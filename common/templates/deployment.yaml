@@ -45,7 +45,7 @@ spec:
           image: {{ .image }}
           {{- if or (.volumes) (.secretVolumes) }}
           volumeMounts:
-          {{- range .volumes }}
+          {{- range .volumeMounts }}
             - name: "{{ .name }}"
               mountPath: "{{ .mountPath }}"
               {{- if .subPath}}
@@ -114,9 +114,9 @@ spec:
       {{- range .sidecars }}
         - name: {{ .name }}-app
           image: {{ .image }}
-          {{- if or (.volumes) (.secretVolumes) }}
+          {{- if or (.volumeMounts) (.secretVolumes) }}
           volumeMounts:
-          {{- range .volumes }}
+          {{- range .volumeMounts }}
             - name: "{{ .name }}"
               mountPath: "{{ .mountPath }}"
               {{- if .subPath}}
