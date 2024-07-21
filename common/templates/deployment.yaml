@@ -182,6 +182,13 @@ spec:
               - {{ . }}
             {{- end }}
           {{- end }}
+          {{- if .securityContext.sysctls }}
+            sysctls:
+          {{- range .securityContext.sysctls }}
+            - name: {{ .name }}
+              value: {{ .value }}
+          {{- end }}
+          {{- end }}
           {{- end }}
 
           {{- if .readinessProbe }}
