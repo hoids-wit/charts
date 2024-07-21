@@ -1,0 +1,8 @@
+apiVersion: v2
+name: servarr
+description: Installs the arr suite (Prowlarr, Bazarr, Radarr, Sonarr, Flaresolverr, Qbittorrent, Redarr)
+version: 0.0.1
+dependencies:
+- name: common
+  version: 0.0.5
+  repository: file://../common
