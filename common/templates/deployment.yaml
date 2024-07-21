@@ -108,7 +108,7 @@ spec:
             sysctls:
           {{- range .securityContext.sysctls }}
             - name: {{ .name }}
-              value: {{ .value }}
+              value: "{{ .value }}"
           {{- end }}
           {{- end }}
           {{- end }}
@@ -186,7 +186,7 @@ spec:
             sysctls:
           {{- range .securityContext.sysctls }}
             - name: {{ .name }}
-              value: {{ .value }}
+              value: "{{ .value }}"
           {{- end }}
           {{- end }}
           {{- end }}
