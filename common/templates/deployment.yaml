@@ -106,7 +106,7 @@ spec:
           {{- end }}
           {{- if .securityContext.sysctls }}
             sysctls:
-          {{- range .securityContext.capabilities }}
+          {{- range .securityContext.sysctls }}
             - name: {{ .name }}
               value: {{ .value }}
           {{- end }}
