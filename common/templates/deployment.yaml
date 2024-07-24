@@ -196,6 +196,7 @@ spec:
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
       {{- end }}
+      {{- end }}
 ---
 {{- if .ingress }}
 {{- if .ingress.enabled }}
