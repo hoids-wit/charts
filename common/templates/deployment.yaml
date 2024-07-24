@@ -1,4 +1,5 @@
 {{- range .Values.apps }}
+{{- if .enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -195,7 +196,6 @@ spec:
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
       {{- end }}
-      {{- end }}
 ---
 {{- if .ingress }}
 {{- if .ingress.enabled }}
@@ -276,4 +276,5 @@ stringData:
 {{- end }}
 {{- end }}
 ---
+{{- end }}
 {{- end }}
