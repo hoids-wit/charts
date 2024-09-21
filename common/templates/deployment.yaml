@@ -120,6 +120,7 @@ spec:
 
       {{- if .sidecars }}
       {{- range .sidecars }}
+      {{- if .enabled }}
         - name: {{ .name }}-app
           image: {{ .image }}
           {{- if or (.volumeMounts) (.secretVolumes) }}
@@ -195,6 +196,7 @@ spec:
           {{- if .readinessProbe }}
           readinessProbe: {{ toYaml .readinessProbe | nindent 12 }}
           {{- end }}
+      {{- end }}
       {{- end }}
       {{- end }}
 ---
