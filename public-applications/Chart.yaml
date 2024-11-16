@@ -1,0 +1,8 @@
+apiVersion: v2
+name: servarr
+description: Installs applications exposed outside of tailscale
+version: 0.0.1
+dependencies:
+- name: common
+  version: 1.0.0
+  repository: file://../common
