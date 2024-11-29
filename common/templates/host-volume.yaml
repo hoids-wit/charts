@@ -1,0 +1,31 @@
+{{- if .Values.hostStorage }}
+{{- range .Values.hostStorage }}
+{{- if .volumeName }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .volumeName}}
+spec:
+  capacity:
+    storage: {{ .pvcCapacity}}
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ .storageClassName}}
+  hostPath:
+    path: "{{ .path}}"
+---
+{{- end }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .pvcName}}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .pvcCapacity}}
+  storageClassName: {{ .storageClassName}}
+---
+{{- end}}
+{{- end}}
