@@ -1,8 +1,8 @@
 apiVersion: v2
 name: servarr
-description: Installs the arr suite (Prowlarr, Bazarr, Radarr, Sonarr, Flaresolverr, Qbittorrent, Redarr)
+description: Installs a suite of custom applications
 version: 0.0.1
 dependencies:
 - name: common
-  version: 1.1.0
+  version: 1.1.1
   repository: file://../common
