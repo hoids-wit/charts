@@ -1,5 +1,4 @@
 {{- if .Values.nfsStorage }}
-{{- if .Values.nfsStorage.enabled }}
 {{- range .Values.nfsStorage }}
 {{- if .createClass }}
 apiVersion: storage.k8s.io/v1
@@ -16,7 +15,6 @@ mountOptions:
   - hard
   - nfsvers=4.1
 ---
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
