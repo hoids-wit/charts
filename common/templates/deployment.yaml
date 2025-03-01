@@ -33,6 +33,14 @@ spec:
               path: "{{ .secretPath }}"
       {{- end }}
       {{- end }}
+      {{- if .emptyDirs }}
+      {{- range .emptyDirs }}
+        - name: "{{ .name}}"
+          emptyDir:
+            medium: Memory
+            sizeLimit: {{ .sizeLimit }}
+      {{- end }}
+      {{- end }}
       {{- end }}
       {{- if .usb }}
       {{- range .usb }}
@@ -55,6 +63,12 @@ spec:
           {{- end }}
           {{- if .secretVolumes }}
           {{- range .secretVolumes }}
+            - name: "{{ .name }}"
+              mountPath: "{{ .mountPath }}"
+          {{- end }}
+          {{- end }}
+          {{- if .emptyDirs }}
+          {{- range .emptyDirs }}
             - name: "{{ .name }}"
               mountPath: "{{ .mountPath }}"
           {{- end }}
