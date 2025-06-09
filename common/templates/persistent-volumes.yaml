@@ -1,4 +1,5 @@
 {{- if .Values.nfsStorage }}
+{{- if .Values.nfsStorage.enabled }}
 {{- range .Values.nfsStorage }}
 {{- if .volumeName }}
 apiVersion: v1
@@ -15,6 +16,7 @@ spec:
     path: "{{ .path}}"
     server: {{ .server}}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

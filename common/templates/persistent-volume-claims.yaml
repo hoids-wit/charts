@@ -1,4 +1,5 @@
 {{- if .Values.nfsStorage }}
+{{- if .Values.nfsStorage.enabled }}
 {{- range .Values.nfsStorage}}
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -12,5 +13,6 @@ spec:
       storage: {{ .pvcCapacity}}
   storageClassName: {{ .storageClassName}}
 ---
+{{- end}}
 {{- end}}
 {{- end}}
