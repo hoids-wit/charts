@@ -115,9 +115,9 @@ spec:
           {{- if .securityContext.capabilities }}
             capabilities:
               add:
-          {{- range .securityContext.capabilities }}
-            - {{ . }}
-          {{- end }}
+            {{- range .securityContext.capabilities }}
+              - {{ . }}
+            {{- end }}
           {{- end }}
           {{- if .securityContext.sysctls }}
             sysctls:
