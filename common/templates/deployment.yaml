@@ -106,9 +106,6 @@ spec:
           {{- range .service.ports }}
             - name: {{ .portName }}
               containerPort: {{ .targetPort }}
-              {{- if .protocol }}
-              protocol: {{.protocol}}
-              {{- end }}
           {{- end }}
           {{- end }}
           {{- end }}
@@ -279,6 +276,9 @@ spec:
     - name: {{ .portName }}
       port: {{ .port }}
       targetPort: {{ .targetPort }}
+      {{- if .protocol }}
+      protocol: {{.protocol}}
+      {{- end }}
     {{- end }}
   type: ClusterIP
   {{- end }}
