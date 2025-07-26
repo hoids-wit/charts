@@ -1,8 +1,0 @@
-apiVersion: v2
-name: Immich
-description: Installs Immich
-version: 0.0.1
-dependencies:
-- name: common
-  version: 0.0.5
-  repository: file://../common

@@ -1,9 +1,0 @@
-apiVersion: v2
-name: keycloak
-version: 0.0.1
-description: Installs keycloak Identity Provider
-type: application
-dependencies:
-- name: common
-  version: 0.0.5
-  repository: file://../common
