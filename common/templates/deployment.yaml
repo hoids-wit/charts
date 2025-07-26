@@ -106,6 +106,9 @@ spec:
           {{- range .service.ports }}
             - name: {{ .portName }}
               containerPort: {{ .targetPort }}
+              {{- if .protocol }}
+              protocol: {{.protocol}}
+              {{- end }}
           {{- end }}
           {{- end }}
           {{- end }}
